@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Aura.Journal.Core</RootNamespace>
+    <AssemblyName>Aura.Journal.Core</AssemblyName>
+    <Description>Aura Journal SDK — доменное ядро: события, изменения, фильтр, репозиторий-порт.</Description>
+  </PropertyGroup>
+</Project>

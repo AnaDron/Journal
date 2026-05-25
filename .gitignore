@@ -1,0 +1,6 @@
+[Bb]in/
+[Oo]bj/
+*.user
+.vs/
+.idea/
+.DS_Store

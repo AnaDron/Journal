@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Aura.Journal.Infrastructure</RootNamespace>
+    <AssemblyName>Aura.Journal.Infrastructure</AssemblyName>
+    <Description>Aura Journal SDK — Infrastructure: EF-сущности, конфигурации, репозиторий, JSON-маппинг.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aura.Journal.Core\Aura.Journal.Core.csproj" />
+    <ProjectReference Include="..\Aura.Journal.Application\Aura.Journal.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.5" />
+    <PackageReference Include="Riok.Mapperly" Version="4.3.1" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Aura.Journal.Core/Aura.Journal.Core.csproj" />
+    <Project Path="src/Aura.Journal.Application/Aura.Journal.Application.csproj" />
+    <Project Path="src/Aura.Journal.Infrastructure/Aura.Journal.Infrastructure.csproj" />
+  </Folder>
+</Solution>
