@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>EventJournal.Core</RootNamespace>
+    <AssemblyName>EventJournal.Core</AssemblyName>
+    <Description>EventJournal SDK — доменное ядро: события, изменения, фильтр, репозиторий-порт.</Description>
+  </PropertyGroup>
+</Project>

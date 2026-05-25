@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EventJournal.Core/EventJournal.Core.csproj" />
+    <Project Path="src/EventJournal.Application/EventJournal.Application.csproj" />
+    <Project Path="src/EventJournal.Infrastructure/EventJournal.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/EventJournal.Application.Tests/EventJournal.Application.Tests.csproj" />
+    <Project Path="test/EventJournal.Infrastructure.Tests/EventJournal.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>

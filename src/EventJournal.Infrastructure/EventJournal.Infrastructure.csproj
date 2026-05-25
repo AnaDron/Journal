@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>EventJournal.Infrastructure</RootNamespace>
+    <AssemblyName>EventJournal.Infrastructure</AssemblyName>
+    <Description>EventJournal SDK — Infrastructure: EF-сущности, конфигурации, репозиторий, JSON-маппинг.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EventJournal.Core\EventJournal.Core.csproj" />
+    <ProjectReference Include="..\EventJournal.Application\EventJournal.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.5" />
+    <PackageReference Include="Riok.Mapperly" Version="4.3.1" />
+  </ItemGroup>
+</Project>

@@ -1,26 +1,25 @@
-# Aura Journal SDK
+# EventJournal SDK
 
 Инфраструктурный SDK журнала событий: append-only история изменений сущностей с расшифровкой
 имени, восстановлением «было» и резолвом полей-ссылок. Типо-агностичное ядро — все типы и поля
 проходят как строки; знание о доменных сущностях консьюмер подключает через четыре plugin-points.
 
-SDK независим от какой-либо доменной области — это переиспользуемая библиотека, развязанная
-от прикладного кода и готовая к экстракции в самостоятельный repo / публикации в NuGet.
+Самостоятельная переиспользуемая библиотека, развязанная от прикладного кода.
 
 ## Структура
 
 ```
-libs/journal/
-├── Aura.Journal.slnx
+.
+├── EventJournal.slnx
 ├── Directory.Build.props
 ├── README.md
 ├── src/
-│   ├── Aura.Journal.Core/              # доменное ядро без внешних зависимостей
-│   ├── Aura.Journal.Application/       # сервисы, обогащение, plugin-point интерфейсы
-│   └── Aura.Journal.Infrastructure/    # EF-сущности, конфигурации, репозиторий
+│   ├── EventJournal.Core/              # доменное ядро без внешних зависимостей
+│   ├── EventJournal.Application/       # сервисы, обогащение, plugin-point интерфейсы
+│   └── EventJournal.Infrastructure/    # EF-сущности, конфигурации, репозиторий
 └── test/
-    ├── Aura.Journal.Application.Tests/
-    └── Aura.Journal.Infrastructure.Tests/
+    ├── EventJournal.Application.Tests/
+    └── EventJournal.Infrastructure.Tests/
 ```
 
 ## Концепция
@@ -76,10 +75,10 @@ public sealed class MyDbContext : DbContext, IJournalDbContext {
 services.AddJournalApplication();                              // Enricher + сервисы записи/чтения
 services.AddJournalInfrastructure<MyDbContext>();              // репозиторий + мост IJournalDbContext
 
-// Доменные адаптеры — на стороне консьюмера:
-services.AddSingleton<IJournalEntityNameResolver, EmployeeNameResolver>();
-services.AddSingleton<IJournalReferenceResolver, ProductGroupRefResolver>();
-services.AddSingleton<IJournalFieldFormatter, EmployeeKindFormatter>();
+// Доменные адаптеры — на стороне консьюмера, по одному на сущность/поле:
+services.AddSingleton<IJournalEntityNameResolver, MyCompositeNameResolver>();
+services.AddSingleton<IJournalReferenceResolver, MyForeignKeyResolver>();
+services.AddSingleton<IJournalFieldFormatter, MyEnumFieldFormatter>();
 services.AddSingleton<IJournalEntityKeyResolver, MyEntityKeyConvention>();
 ```
 
@@ -87,13 +86,13 @@ services.AddSingleton<IJournalEntityKeyResolver, MyEntityKeyConvention>();
 
 ```csharp
 using var scope = journalControl.BeginEvent(new JournalEventScopeOptions(
-    Reason: "Импорт сотрудников",
+    Reason: "Импорт каталога",
     InitiatorKind: JournalInitiatorKind.Integration,
-    InitiatorId: "evotor"));
+    InitiatorId: "external-system"));
 
-journalControl.Add<Employee>(key: $"employee/{id}", entity: created);
-journalControl.Update<Product>(key: $"product/{id}", current: before, updated: after);
-journalControl.Remove<Product>(key: $"product/{id}");
+journalControl.Add<Item>(key: $"item/{id}", entity: created);
+journalControl.Update<Item>(key: $"item/{id}", current: before, updated: after);
+journalControl.Remove<Item>(key: $"item/{id}");
 
 await db.SaveChangesAsync();  // событие и изменения уходят одной транзакцией
 ```
@@ -102,10 +101,10 @@ await db.SaveChangesAsync();  // событие и изменения уходя
 
 ```csharp
 Page<JournalEventView> page = await journalService.ListEventsAsync(
-    new JournalListFilter(Page: 1, PageSize: 50, EntityType: "Product", ...));
+    new JournalListFilter(Page: 1, PageSize: 50, EntityType: "Item", ...));
 
 JournalEntityHistoryView history = await journalService.GetEntityHistoryAsync(
-    entityType: "Product", entityKey: "product/abc-...");
+    entityType: "Item", entityKey: "item/abc-...");
 ```
 
 В `JournalEventView` и `JournalEntityHistoryView` каждое изменение уже содержит вычисленные
